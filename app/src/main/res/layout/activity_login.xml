@@ -110,6 +110,7 @@
         android:layout_marginLeft="25dp"
         android:textSize="20sp"
         android:visibility="invisible"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>
