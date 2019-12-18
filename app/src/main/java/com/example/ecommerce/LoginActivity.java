@@ -79,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                             LoadingBar.dismiss();
                             Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                         }
+                        else{
+                            Toast.makeText(LoginActivity.this, "wrong Password! ..", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     
                 }
