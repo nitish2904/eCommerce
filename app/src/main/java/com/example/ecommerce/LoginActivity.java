@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ecommerce.Model.Users;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog LoadingBar;
     private String ParentDbName = "Users";
     private CheckBox ChkBoxRememberMe;
+    private TextView AdminLink,NotAdminLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         LoginButton = (Button)findViewById(R.id.login_btn);
         LoadingBar = new ProgressDialog(this);
         ChkBoxRememberMe = (CheckBox)findViewById(R.id.remember_me_chkb);
+        AdminLink = (TextView)findViewById(R.id.admin_panel_link);
+        NotAdminLink = (TextView)findViewById(R.id.not_admin_panel_link);
+
         Paper.init(this);
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +53,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        AdminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginButton.setText("Login Admin");
+                AdminLink.setVisibility(View.INVISIBLE);
+                NotAdminLink.setVisibility(View.VISIBLE);
+                ParentDbName = "Admins";
+            }
+        });
+
+        NotAdminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginButton.setText("Login");
+                AdminLink.setVisibility(View.VISIBLE);
+                NotAdminLink.setVisibility(View.INVISIBLE);
+                ParentDbName = "Users";
+            }
+        });
     }
 
     private void LoginUser() {
@@ -83,15 +107,29 @@ public class LoginActivity extends AppCompatActivity {
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(ParentDbName).child(phone).exists()){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.child(ParentDbName).child(phone).exists())
+                {
                     Users Usersdata = dataSnapshot.child(ParentDbName).child(phone).getValue(Users.class);
-                    if(Usersdata.getPhone().equals(phone)){
-                        if (Usersdata.getPassword().equals(password)){
-                            Toast.makeText(LoginActivity.this, "Logged in Successfully ..", Toast.LENGTH_SHORT).show();
-                            LoadingBar.dismiss();
-                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                            startActivity(intent);
+                    if(Usersdata.getPhone().equals(phone))
+                    {
+                        if (Usersdata.getPassword().equals(password))
+                        {
+                            if (ParentDbName.equals("Admins"))
+                            {
+                                Toast.makeText(LoginActivity.this, "Welcome Admin ..Logged in Successfully ..", Toast.LENGTH_SHORT).show();
+                                LoadingBar.dismiss();
+                                Intent intent = new Intent(LoginActivity.this,AdminAddNewProductActivity.class);
+                                startActivity(intent);
+                            }
+                            else if (ParentDbName.equals("Users"))
+                            {
+                                Toast.makeText(LoginActivity.this, "Logged in Successfully ..", Toast.LENGTH_SHORT).show();
+                                LoadingBar.dismiss();
+                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                startActivity(intent);
+                            }
                         }
                         else{
                             LoadingBar.dismiss();
