@@ -86,10 +86,15 @@ public class HomeActivity extends AppCompatActivity
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
+        userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+
 
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onBackPressed() {
@@ -148,7 +153,7 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_settings)
         {
-            
+
         }
         else if (id == R.id.nav_logout)
         {
