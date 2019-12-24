@@ -2,7 +2,7 @@ package com.example.ecommerce.Model;
 
 public class Users {
     private String name,phone,password;
-    void Users()
+    public Users()
     {
 
     }
