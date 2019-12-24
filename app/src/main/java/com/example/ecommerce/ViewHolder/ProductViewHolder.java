@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
-    public TextView txtProcuctName,txtProductDescription;
+    public TextView txtProductName,txtProductDescription,txtProductPrice;
     public ImageView imageView;
     public ItemClickListener listener;
     public ProductViewHolder(@NonNull View itemView)
@@ -23,7 +23,8 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
         super(itemView);
         imageView = (ImageView)itemView.findViewById(R.id.product_image);
         txtProductDescription = (TextView)itemView.findViewById(R.id.product_description);
-        txtProcuctName = (TextView)itemView.findViewById(R.id.product_name);
+        txtProductName = (TextView)itemView.findViewById(R.id.product_name);
+        txtProductPrice = (TextView)itemView.findViewById(R.id.product_price);
     }
 
     public void setItemClickListener(ItemClickListener listener)
